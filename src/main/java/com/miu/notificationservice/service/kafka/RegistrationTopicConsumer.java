@@ -27,9 +27,9 @@ public class RegistrationTopicConsumer {
     @Autowired
     GmailService gmailService;
 
-    @KafkaListener(topics = "${topic.orderCreated.name}",groupId = "${spring.kafka.consumer.group-id}")
+    @KafkaListener(topics = "${topic.courseRegistration.name}",groupId = "${spring.kafka.consumer.group-id}")
     public void consume(ConsumerRecord<String, RegistrationStream> payload){
-        logger.warn("Consumed Order", payload);
+        logger.warn("Consumed Registration Event", payload);
         RegistrationStream registrationStream  = payload.value();
         NotificationRequest req =
                 new NotificationRequest(
@@ -37,15 +37,14 @@ public class RegistrationTopicConsumer {
                         registrationStream.getStudentEmail(),
                         registrationStream.getCourseName(),
                         registrationStream.getProfessorName(),
-                        "waa.test.pro@gmail.com"
+                        "se.yemanebalemu@gmail.com"
                 );
+        System.out.println(req);
         gmailService.sendHtmlEmail(
                 registrationStream.getStudentEmail(),
-                "New Order Placed",
+                "Registration Successful",
                 new EmailTemplate().courseRegistration(req));
 
     }
 }
 
-
-//RegistrationTopicConsumer

@@ -59,13 +59,14 @@ public class GmailService implements EmailService {
         notificationEmail.setSubject(subject);
         notificationEmail.setText(message);
         notificationEmail.setTo(to);
+        System.out.println(to);
 
         javaMailSender.send(notificationEmail);
     }
 
     @Override
     public void sendHtmlEmail(String to, String subject, String message) {
-
+        System.out.println("Email abut to sedn");
         boolean html = true;
         MimeMessage zmessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(zmessage);
